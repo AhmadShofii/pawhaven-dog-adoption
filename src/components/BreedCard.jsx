@@ -14,7 +14,6 @@ const BreedCard = ({
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    // Jika gambar sudah dioper lewat props, tidak perlu fetch dari API
     if (image || !breed) {
       return;
     }
@@ -52,8 +51,8 @@ const BreedCard = ({
   };
 
   return (
-    <article className="breed-card" onClick={handleCardClick}>
-      <div className="breed-card-media">
+    <article className="card breed-card" onClick={handleCardClick}>
+      <div className="pic breed-card-media">
         {isLoadingImage && (
           <div className="breed-image-skeleton" aria-hidden="true">
             <span className="spinner-mini"></span>
@@ -69,7 +68,6 @@ const BreedCard = ({
             <span className="fallback-icon" aria-hidden="true">
               🐕
             </span>
-            <span className="fallback-text">Foto belum tersedia</span>
           </div>
         ) : (
           <img
@@ -84,45 +82,15 @@ const BreedCard = ({
             loading="lazy"
           />
         )}
-
-        {hasSubBreeds && (
-          <span
-            className="breed-badge"
-            title={`${subBreeds.length} sub-ras ditemukan`}
-          >
-            {subBreeds.length} Sub-ras
-          </span>
-        )}
       </div>
 
-      <div className="breed-card-content">
-        <h3 className="breed-card-title">{formattedName}</h3>
+      <span className="name breed-card-title">{formattedName}</span>
 
-        {hasSubBreeds && (
-          <p className="breed-card-subtypes">
-            Tipe:{' '}
-            {subBreeds
-              .slice(0, 3)
-              .map((sub) => formatBreedName(sub))
-              .join(', ')}
-            {subBreeds.length > 3 && ` +${subBreeds.length - 3} lainnya`}
-          </p>
-        )}
-
-        <div className="breed-card-footer">
-          <button
-            type="button"
-            className="breed-card-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCardClick();
-            }}
-            aria-label={`Lihat detail ras ${formattedName}`}
-          >
-            Lihat Detail
-          </button>
-        </div>
-      </div>
+      {hasSubBreeds && (
+        <span className="sub breed-card-subtypes">
+          {subBreeds.length} sub-ras
+        </span>
+      )}
     </article>
   );
 };

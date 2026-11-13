@@ -3,8 +3,7 @@ import './SearchBar.css';
 const SearchBar = ({
   value = '',
   onChange,
-  placeholder = 'Cari ras anjing (misal: golden, husky, beagle)...',
-  totalResults,
+  placeholder = 'Anjing yang mana? Misalnya husky',
   disabled = false,
 }) => {
   const popularKeywords = ['Golden', 'Husky', 'Bulldog', 'Corgi', 'Poodle', 'Terrier'];
@@ -38,25 +37,11 @@ const SearchBar = ({
         role="search"
         onSubmit={(e) => e.preventDefault()}
       >
-        <label htmlFor="breed-search-input" className="search-label">
-          <span className="search-label-header">
-            <span className="search-label-title">Cari Ras Anjing</span>
-            {value.trim() && typeof totalResults === 'number' && (
-              <span className="search-results-pill">
-                {totalResults} ras ditemukan
-              </span>
-            )}
-          </span>
-          <span className="search-label-desc">
-            Filter ras atau sub-ras berdasarkan nama
-          </span>
+        <label htmlFor="breed-search-input" className="sr-only">
+          Cari ras anjing
         </label>
 
         <div className={`search-input-wrapper ${disabled ? 'disabled' : ''}`}>
-          <span className="search-input-icon" aria-hidden="true">
-            🔍
-          </span>
-
           <input
             id="breed-search-input"
             name="breed-search"
@@ -68,7 +53,6 @@ const SearchBar = ({
             disabled={disabled}
             autoComplete="off"
             spellCheck="false"
-            aria-describedby="search-hint"
           />
 
           {value && (
@@ -83,14 +67,10 @@ const SearchBar = ({
             </button>
           )}
         </div>
-
-        <p id="search-hint" className="sr-only">
-          Ketik nama ras atau sub-ras anjing untuk menyaring hasil katalog secara langsung.
-        </p>
       </form>
 
       <div className="search-tags-container" aria-label="Pencarian Cepat">
-        <span className="search-tags-label">Populer:</span>
+        <span className="search-tags-label">Sering dicari:</span>
         <div className="search-tags-list">
           {popularKeywords.map((keyword) => {
             const isActive = value.toLowerCase() === keyword.toLowerCase();
@@ -103,7 +83,6 @@ const SearchBar = ({
                 disabled={disabled}
                 aria-pressed={isActive}
               >
-                {isActive && <span className="tag-check" aria-hidden="true">✓ </span>}
                 {keyword}
               </button>
             );

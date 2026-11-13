@@ -102,11 +102,9 @@ const HomePage = ({
   return (
     <main className="home-container">
       <section className="home-hero-section">
-        <span className="hero-pill-badge">🐾 Dog CEO REST API</span>
-        <h1 className="home-hero-title">Katalog Ras Anjing Dunia</h1>
+        <h1 className="home-hero-title">Ras anjing</h1>
         <p className="home-hero-subtitle">
-          Temukan dan jelajahi puluhan varietas ras anjing terbaik dengan galeri foto
-          berkualitas tinggi dari seluruh penjuru dunia.
+          Jelajahi ratusan ras anjing lengkap dengan galeri fotonya.
         </p>
 
         <div className="home-search-slot">
@@ -177,7 +175,7 @@ const HomePage = ({
                   </>
                 ) : (
                   <>
-                    Menampilkan <strong>{displayBreeds.length}</strong> ras anjing
+                    <b>{displayBreeds.length}</b> ras ditemukan
                   </>
                 )}
               </span>
