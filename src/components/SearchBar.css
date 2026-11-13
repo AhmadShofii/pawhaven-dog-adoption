@@ -1,0 +1,220 @@
+.search-bar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.search-bar-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.search-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.search-label-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-results-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent, #aa3bff);
+  background-color: var(--accent-bg, rgba(170, 59, 255, 0.1));
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--accent-border, rgba(170, 59, 255, 0.3));
+}
+
+.search-label-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h, #08060d);
+  letter-spacing: -0.2px;
+}
+
+.search-label-desc {
+  font-size: 12px;
+  color: var(--text, #6b6375);
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 12px;
+  background-color: var(--bg, #ffffff);
+  border: 1.5px solid var(--border, #e5e4e7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.search-input-wrapper:focus-within {
+  border-color: var(--accent, #aa3bff);
+  box-shadow: 0 0 0 3px var(--accent-bg, rgba(170, 59, 255, 0.15)),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.search-input-wrapper.disabled {
+  opacity: 0.6;
+  background-color: var(--code-bg, #f4f3ec);
+  cursor: not-allowed;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 44px 14px 46px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-h, #08060d);
+  background: transparent;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-input::placeholder {
+  color: var(--text, #6b6375);
+  opacity: 0.7;
+}
+
+.search-input:disabled {
+  cursor: not-allowed;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: var(--code-bg, #f4f3ec);
+  color: var(--text, #6b6375);
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.search-clear-btn:hover {
+  background: var(--text-h, #08060d);
+  color: #ffffff;
+  border-color: var(--text-h, #08060d);
+}
+
+.search-tags-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.search-tags-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text, #6b6375);
+  flex-shrink: 0;
+}
+
+.search-tags-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.search-tag-chip {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  border: 1px solid var(--border, #e5e4e7);
+  background-color: var(--bg, #ffffff);
+  color: var(--text, #6b6375);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.search-tag-chip:hover:not(:disabled) {
+  border-color: var(--accent, #aa3bff);
+  color: var(--accent, #aa3bff);
+  background-color: var(--accent-bg, rgba(170, 59, 255, 0.08));
+}
+
+.search-tag-chip.active {
+  background-color: var(--accent, #aa3bff);
+  border-color: var(--accent, #aa3bff);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.search-tag-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tag-check {
+  font-size: 11px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .search-input {
+    font-size: 14px;
+    padding: 12px 38px 12px 40px;
+  }
+
+  .search-input-icon {
+    left: 12px;
+    font-size: 14px;
+  }
+
+  .search-tag-chip {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}

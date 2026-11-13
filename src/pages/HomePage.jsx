@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getAllBreeds } from '../services/dogService.js';
 import BreedCard from '../components/BreedCard.jsx';
+import SearchBar from '../components/SearchBar.jsx';
+import EmptyState from '../components/EmptyState.jsx';
+import { formatBreedName } from '../utils/formatters.js';
 import './HomePage.css';
 
-/**
- * Komponen HomePage - Anggota 2
- * Menangani fetching data utama, loading state, error state,
- * dan perenderan daftar kartu ras anjing menggunakan map() dengan key unik.
- */
 const HomePage = ({
   onSelectBreed,
   searchSlot,
@@ -17,6 +15,7 @@ const HomePage = ({
   const [breeds, setBreeds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     let isMounted = true;
@@ -26,7 +25,6 @@ const HomePage = ({
         const data = await getAllBreeds();
 
         if (isMounted) {
-          // Transformasi respons object { breed: [subBreeds] } menjadi array
           const formattedBreeds = Object.entries(data).map(([name, subBreeds]) => ({
             name,
             subBreeds: Array.isArray(subBreeds) ? subBreeds : [],
@@ -77,12 +75,32 @@ const HomePage = ({
     }
   };
 
-  // Tentukan daftar data yang akan dirender (jika ada filtering dari Anggota 3, gunakan filteredBreeds)
-  const displayBreeds = filteredBreeds !== undefined ? filteredBreeds : breeds;
+  const clientFilteredBreeds = breeds.filter((item) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+
+    const rawNameMatch = item.name.toLowerCase().includes(query);
+    const formattedName = formatBreedName(item.name).toLowerCase();
+    const formattedNameMatch = formattedName.includes(query);
+
+    const subBreedMatch =
+      Array.isArray(item.subBreeds) &&
+      item.subBreeds.some((sub) => {
+        const subRaw = sub.toLowerCase();
+        const subFormatted = formatBreedName(sub).toLowerCase();
+        return subRaw.includes(query) || subFormatted.includes(query);
+      });
+
+    return rawNameMatch || formattedNameMatch || subBreedMatch;
+  });
+
+  const displayBreeds =
+    filteredBreeds !== undefined ? filteredBreeds : clientFilteredBreeds;
+
+  const isSearching = searchQuery.trim().length > 0;
 
   return (
     <main className="home-container">
-      {/* Hero / Intro Section */}
       <section className="home-hero-section">
         <span className="hero-pill-badge">🐾 Dog CEO REST API</span>
         <h1 className="home-hero-title">Katalog Ras Anjing Dunia</h1>
@@ -91,17 +109,23 @@ const HomePage = ({
           berkualitas tinggi dari seluruh penjuru dunia.
         </p>
 
-        {/* Slot Opsional untuk SearchBar (Fitur Anggota 3) */}
-        {searchSlot && <div className="home-search-slot">{searchSlot}</div>}
+        <div className="home-search-slot">
+          {searchSlot || (
+            <SearchBar
+              value={searchQuery}
+              onChange={setSearchQuery}
+              totalResults={!loading && !error ? displayBreeds.length : 0}
+              disabled={loading || Boolean(error)}
+            />
+          )}
+        </div>
       </section>
 
-      {/* Main Content Section */}
       <section
         className="home-catalog-section"
         id="katalog-ras"
         aria-label="Daftar Ras Anjing"
       >
-        {/* 1. Loading State */}
         {loading && (
           <div
             className="status-container status-loading"
@@ -116,7 +140,6 @@ const HomePage = ({
           </div>
         )}
 
-        {/* 2. Error State */}
         {!loading && error && (
           <div className="status-container status-error" role="alert">
             <span className="status-icon" aria-hidden="true">
@@ -134,18 +157,41 @@ const HomePage = ({
           </div>
         )}
 
-        {/* 3. Empty State Slot (Penanganan data kosong pencarian Anggota 3) */}
-        {!loading && !error && emptyStateSlot && displayBreeds.length === 0 && (
-          emptyStateSlot
+        {!loading && !error && displayBreeds.length === 0 && (
+          emptyStateSlot || (
+            <EmptyState
+              searchQuery={searchQuery}
+              onReset={() => setSearchQuery('')}
+            />
+          )
         )}
 
-        {/* 4. Success State: Render List dengan map() dan key unik */}
         {!loading && !error && displayBreeds.length > 0 && (
           <div className="catalog-content">
             <div className="catalog-header-info">
               <span className="catalog-count-badge">
-                Menampilkan <strong>{displayBreeds.length}</strong> ras anjing
+                {isSearching ? (
+                  <>
+                    Menemukan <strong>{displayBreeds.length}</strong> ras untuk kata kunci{' '}
+                    <span className="search-query-tag">"{searchQuery.trim()}"</span>
+                  </>
+                ) : (
+                  <>
+                    Menampilkan <strong>{displayBreeds.length}</strong> ras anjing
+                  </>
+                )}
               </span>
+
+              {isSearching && (
+                <button
+                  type="button"
+                  className="catalog-reset-btn"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Bersihkan pencarian"
+                >
+                  ✕ Bersihkan Pencarian
+                </button>
+              )}
             </div>
 
             <div className="breed-grid">

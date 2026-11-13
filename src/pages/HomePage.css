@@ -6,7 +6,6 @@
   box-sizing: border-box;
 }
 
-/* Hero Section */
 .home-hero-section {
   padding: 48px 24px 32px;
   background: linear-gradient(
@@ -59,7 +58,6 @@
   margin-top: 24px;
 }
 
-/* Catalog Section */
 .home-catalog-section {
   padding: 32px 24px 64px;
   max-width: 1126px;
@@ -84,7 +82,29 @@
   color: var(--text-h, #08060d);
 }
 
-/* Responsive Grid */
+.search-query-tag {
+  color: var(--accent, #aa3bff);
+  font-weight: 600;
+}
+
+.catalog-reset-btn {
+  background: var(--code-bg, #f4f3ec);
+  border: 1px solid var(--border, #e5e4e7);
+  color: var(--text, #6b6375);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.catalog-reset-btn:hover {
+  background-color: var(--text-h, #08060d);
+  color: #ffffff;
+  border-color: var(--text-h, #08060d);
+}
+
 .breed-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -93,7 +113,6 @@
   box-sizing: border-box;
 }
 
-/* Loading & Error Status Common */
 .status-container {
   display: flex;
   flex-direction: column;
@@ -122,7 +141,6 @@
   line-height: 1.5;
 }
 
-/* Loading State Spinner */
 .spinner-large {
   width: 48px;
   height: 48px;
@@ -138,7 +156,6 @@
   }
 }
 
-/* Error State */
 .status-error {
   border-color: rgba(239, 68, 68, 0.4);
   background-color: rgba(239, 68, 68, 0.04);
@@ -172,7 +189,6 @@
   transform: translateY(0);
 }
 
-/* Responsive Media Queries */
 @media (max-width: 768px) {
   .home-hero-section {
     padding: 36px 16px 24px;
